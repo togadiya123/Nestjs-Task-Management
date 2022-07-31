@@ -1,13 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TasksModule } from './tasks/tasks.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-
-console.log(process.env.HOST);
-console.log(process.env.PORT);
-console.log(process.env.USER);
-console.log(process.env.PASSWORD);
-console.log(process.env.DATABASE);
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -22,9 +17,16 @@ console.log(process.env.DATABASE);
       username: process.env.USER,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
