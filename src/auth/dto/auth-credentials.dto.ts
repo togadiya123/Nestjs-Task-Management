@@ -1,13 +1,15 @@
-import { isString, maxLength, minLength } from 'class-validator';
+import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class AuthCredentialsDto {
-  // @isString()
-  // @minLength(4)
-  // @maxLength(20)
+  @IsString()
+  @MinLength(4)
+  @MaxLength(20)
   username: string;
 
-  // @isString()
-  // @minLength(8)
-  // @maxLength(32)
+  @IsString()
+  @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/, {
+    message:
+      'Password must be 8 character long and contains at least one special character (!,@,#,$,&,*), one numeral, one latter in upper case and one latte in lower case.',
+  })
   password: string;
 }
