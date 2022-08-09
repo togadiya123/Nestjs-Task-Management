@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 
 import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { JwtPayload } from "./jwt-payload.interface";
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
