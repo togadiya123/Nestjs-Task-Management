@@ -11,8 +11,9 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
-  await app.listen(3000);
-  logger.log('Application is running on: 3000');
+  await app.listen(process.env.PORT || 3000);
+  const url = await app.getUrl();
+  logger.log('Application is running on: ' + url);
 }
 
 bootstrap().then(() => null);
